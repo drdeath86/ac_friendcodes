@@ -44,6 +44,12 @@ session_start();
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="usr_nickname" class="col-sm-2 control-label">Friend Code: </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="usr_fc" placeholder="Friend Code">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="usr_email" class="col-sm-2 control-label">Email: </label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control" id="usr_nickname" placeholder="Email">
