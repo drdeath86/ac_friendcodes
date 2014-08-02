@@ -1,7 +1,7 @@
 <?php
 
-//ini_set('display_errors',1); 
-//error_reporting(E_ALL);
+ini_set('display_errors',1); 
+error_reporting(E_ALL);
 session_start();
 
 include './conexion_db.php';
@@ -34,14 +34,40 @@ $arrayValoresdeRegistro = array( 0 => $usr_nickname,
 $json->verificarValoresNulos = verificarValoresNulos($arrayValoresdeRegistro);
 
 if($json->verificarValoresNulos){
-    $json->verificarUsuarioNickName = verificarUsuarioNickname($arrayValoresdeRegistro[0]);
-    $json->verificarFriendCode = verificarFriendCode($arrayValoresdeRegistro[1]);
-    $json->verificarEmail = verificarEmail($arrayValoresdeRegistro[2]);
+    $json->verificarUsuarioNickName     = verificarUsuarioNickname($arrayValoresdeRegistro[0]); //Regresa TRUE si existe el usuario
+    $json->verificarFriendCode          = verificarFriendCode($arrayValoresdeRegistro[1]); //Regresa TRUE si el FC ya esta registrado
+    $json->verificarEmail               = verificarEmail($arrayValoresdeRegistro[2]); //Regresa TRUE si el correo ya existe
+    $json->verificaPassword             = TRUE;
+    //echo json_encode($json);
+}
+else{
+    $json->verificarUsuarioNickName = FALSE;
+    $json->verificarFriendCode      = FALSE;
+    $json->verificarEmail           = FALSE;
+    $json->verificaPassword         = TRUE;
+    
+    //echo json_encode($json);
 }
 
-echo json_encode($json);
 
 
+if(!$json->verificarUsuarioNickName && !$json->verificarFriendCode && !$json->verificarEmail && $json->verificaPassword){
+    //Encriptamos la contraseña
+    if (CRYPT_STD_DES == 1) {
+    	$password = crypt($arrayValoresdeRegistro[2], 'rl');
+    }
+    
+    $queryRegistro = "INSERT INTO ac_usuarios (usr_nickname, usr_email, usr_password, usr_fc) VALUES ('$arrayValoresdeRegistro[0]', '$arrayValoresdeRegistro[2]', '$password', '$arrayValoresdeRegistro[1]')";
+    mysql_query($queryRegistro, $con);
+    
+    $json->query = $queryRegistro;
+    $json->registro = TRUE;
+    echo json_encode($json);
+}
+else{
+    $json->registro = FALSE;
+    echo json_encode($json);
+}
 
 //http://acfriendcodes/php/registro_db.php?usr_nickname=carlos&usr_fc=1234&usr_email=carlos.mejia.rueda@gmail.com&usr_password=nirvana&usr_password2=nirvana1
 
