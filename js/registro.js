@@ -1,5 +1,10 @@
+//Utiliza login_registro.js
+
 $(document).ready(function(){
     frm_registro_submit();
+    modalIniciarSesion();
+    modalRegistrar();
+    login();
 });
 
 function frm_registro_submit(){
@@ -53,12 +58,12 @@ function validarCamposVacios(){
     }
     
     if($("#usr_email").val() === ""){
-        $("#alert_email").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Warning!</strong> Better check yourself</div>');     
+        $("#alert_email").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Necesitas</strong> un correo electronico.</div>');     
         validacionEmail = false;
     }
     
     if($("#usr_password").val() === ""){
-        $("#alert_password").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Warning!</strong> Better check yourself</div>');     
+        $("#alert_password").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Necesitas</strong> una contraseña.</div>');     
         validacionPassword = false;
     }
     
@@ -80,19 +85,19 @@ function validarValoresExistentes(nickname,friendcode,email){
     
     if(nickname === true){
         $("#alert_nickname").empty();
-        $("#alert_nickname").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Warning!</strong> Better check yourself</div>');
+        $("#alert_nickname").append('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Este nickname </strong> ya esta registrado, elige otro.</div>');
         //validacionNickName = false;
     }
     
     if(friendcode === true){
         $("#alert_fc").empty();
-        $("#alert_fc").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Warning!</strong> Better check yourself</div>');     
+        $("#alert_fc").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Este Friend Code</strong> ya esta registrado.</div>');     
         //validacionFriendCode = false;
     }
     
     if(email === true){
         $("#alert_email").empty();
-        $("#alert_email").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Warning!</strong> Better check yourself</div>');     
+        $("#alert_email").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Este Email</strong> ya esta registrado.</div>');     
         //validacionEmail = false;
     }  
     

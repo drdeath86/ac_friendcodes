@@ -6,7 +6,8 @@ session_start();
 
 include './conexion_db.php';
 $con = conexion();
-include './registro_funciones.php';
+include './funciones_php/registro_funciones.php';
+include './funciones_php/funciones_generales.php';
 
 //VARIABLES QUE RECIBE ESTE ARCHIVO
 
@@ -45,17 +46,14 @@ else{
     $json->verificarFriendCode      = FALSE;
     $json->verificarEmail           = FALSE;
     $json->verificaPassword         = TRUE;
-    
     //echo json_encode($json);
 }
 
-
-
 if(!$json->verificarUsuarioNickName && !$json->verificarFriendCode && !$json->verificarEmail && $json->verificaPassword){
     //Encriptamos la contraseña
-    if (CRYPT_STD_DES == 1) {
-    	$password = crypt($arrayValoresdeRegistro[2], 'rl');
-    }
+   
+    //$password = crypt($arrayValoresdeRegistro[3], 'rl');
+    $password = password_hash($arrayValoresdeRegistro[3], PASSWORD_DEFAULT);
     
     $queryRegistro = "INSERT INTO ac_usuarios (usr_nickname, usr_email, usr_password, usr_fc) VALUES ('$arrayValoresdeRegistro[0]', '$arrayValoresdeRegistro[2]', '$password', '$arrayValoresdeRegistro[1]')";
     mysql_query($queryRegistro, $con);
