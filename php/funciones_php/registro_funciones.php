@@ -48,6 +48,17 @@ function verificarEmail($email){
     }
 }
 
+//Verifica que las contraseñas sean iguales y mayores a 8 caracteres
+//Regresa TRUE si son iguales
+function verificaPassword($password, $passwordConf){
+    if($password == $passwordConf){
+        return TRUE;
+    }
+    else{
+        return FALSE;
+    }
+}
+
 function validaInsercionDatos($nick, $FC, $correo){
     if(!nick && !FC && !correo){
         return TRUE;

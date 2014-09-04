@@ -1,7 +1,7 @@
 <?php
 
 ini_set('display_errors',1); 
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_DEPRECATED);
 session_start();
 
 include './conexion_db.php';
@@ -38,14 +38,14 @@ if($json->verificarValoresNulos){
     $json->verificarUsuarioNickName     = verificarUsuarioNickname($arrayValoresdeRegistro[0]); //Regresa TRUE si existe el usuario
     $json->verificarFriendCode          = verificarFriendCode($arrayValoresdeRegistro[1]); //Regresa TRUE si el FC ya esta registrado
     $json->verificarEmail               = verificarEmail($arrayValoresdeRegistro[2]); //Regresa TRUE si el correo ya existe
-    $json->verificaPassword             = TRUE;
+    $json->verificaPassword             = verificaPassword($arrayValoresdeRegistro[3], $arrayValoresdeRegistro[4]);
     //echo json_encode($json);
 }
 else{
     $json->verificarUsuarioNickName = FALSE;
     $json->verificarFriendCode      = FALSE;
     $json->verificarEmail           = FALSE;
-    $json->verificaPassword         = TRUE;
+    $json->verificaPassword         = FALSE;
     //echo json_encode($json);
 }
 

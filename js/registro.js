@@ -25,14 +25,18 @@ function frm_registro_submit(){
                     query               = data.query;
                     
                     if(registro === true){
-                        alert("Registro exitoso");
+                        //alert("Registro exitoso");
+                        $('#alert_registro').append("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button><strong>Mensaje: </strong> Registro Exitoso.</div>");
+                        $('#btn_registro').attr('disabled', 'disabled');
+                        $('#usr_nickname').attr('disabled', 'disabled');
+                        $('#usr_fc').attr('disabled', 'disabled');
+                        $('#usr_email').attr('disabled', 'disabled');
+                        $('#usr_password').attr('disabled', 'disabled');
+                        $('#usr_password_conf').attr('disabled', 'disabled');
                     }
                     else{
                         validarValoresExistentes(existeNickName, existeFriendCode, existeEmail);
-                    }
-                    
-                    
-                    
+                    } 
                 },
                 'json'
             );
@@ -58,7 +62,7 @@ function validarCamposVacios(){
     }
     
     if($("#usr_email").val() === ""){
-        $("#alert_email").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Necesitas</strong> un correo electronico.</div>');     
+        $("#alert_email").append('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Necesitas</strong> un correo electronico.</div>');
         validacionEmail = false;
     }
     
@@ -68,7 +72,7 @@ function validarCamposVacios(){
     }
     
     if(validacionNickName && validacionFriendCode && validacionEmail && validacionPassword){
-        valdacion = true;
+        validacion = true;
     }
     else{
         validacion = false;

@@ -101,6 +101,7 @@ session_start();
                             </div>
                         </div>
                     </form>
+                    <div id="alert_registro"></div>
                 </div>
             </div>
         </div>

@@ -19,8 +19,8 @@
     $verificarValoresnulos = verificarValoresNulos($arrayValoresLogin);
     
     if($verificarValoresnulos){
+        //REGRESA UN JSON CON LOS PARAMETROS DE VALIDACION PARA SU MANIPULACION EN JS
         $json = verificarDatosLogin($arrayValoresLogin[0], $arrayValoresLogin[1]);
-        
     }
     else{
         $json->valoresNulos = FALSE;
