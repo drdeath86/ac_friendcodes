@@ -7,9 +7,11 @@
     if(isset($_SESSION['usr_id']) && isset($_SESSION['usr_nickname'])){
         $usr_id = $_SESSION['usr_id'];
         $where = "WHERE usr_id NOT IN ($usr_id)";
+        $estado = TRUE;
     }
     else{
         $where = "";
+        $estado = FALSE;
     }
     
     include './conexion_db.php';
@@ -38,7 +40,8 @@
                                     'usr_fc' => mysql_result($resOfertas, $i, "usr_fc"),
                                     'oferta_precio' => mysql_result($resOfertas, $i, "oferta_precio"),
                                     'oferta_fecha' => mysql_result($resOfertas, $i, "oferta_fecha"),
-                                    'oferta_imagen' => mysql_result($resOfertas, $i, "oferta_imagen"));
+                                    'oferta_imagen' => mysql_result($resOfertas, $i, "oferta_imagen"),
+                                    'usr_id' => mysql_result($resOfertas, $i, "usr_id"));
         }
     }
     else{
@@ -46,6 +49,7 @@
     }
     
     $json->ofertas = $respuestaJSON;
+    $json->estado = $estado;
     
     echo json_encode($json);
     

@@ -1,7 +1,11 @@
 var pagina = 0;
 var salto = 4;
+var usr_id;
+var usr_email;
+var usr_nickname;
 
-$(document).ready(function(){    
+$(document).ready(function(){
+    verificarSesion();
     modalIniciarSesion();
     modalRegistrar();
     registroCorreo();
@@ -16,27 +20,57 @@ function cargarOfertas(){
     $.post("/php/index_db.php",
         cadena,
         function(data){
+            
             bandera = 1;
             $.each(data.ofertas, function(i,val){
                 //alert(val.usr_nickname);
                 if(bandera == 1){
-                    $("#timeline_ofertas").append("<li><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary peticion' id='usr_peticion'>Primary</button></div></div></div></li>");
+                    $("#timeline_ofertas").append("<li><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.usr_id+"'>Primary</button></div></div></div></li>");
                     bandera = 0;
                 }     
                 else{
-                    $("#timeline_ofertas").append("<li class='timeline-inverted'><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary peticion' id='usr_peticion'>Primary</button></div></div></div></li>")
+                    $("#timeline_ofertas").append("<li class='timeline-inverted'><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.usr_id+"'>Primary</button></div></div></div></li>")
                     bandera = 1;
                 }
             });
             pagina += salto;
+            
+        },
+        'json'
+    );
+}
+
+function verificarSesion(){
+    $.post("/php/verifica_sesion.php",
+        function(data){
+            //alert(data.estado);
+            if(data.estado === true){
+                usr_id = data.usr_id;
+                usr_nickname = data.usr_nickname;
+                $("#botonMenUsuario").text(usr_nickname);
+            }
+            else{
+                //alert("No ha iniciado sesion");
+            }
         },
         'json'
     );
 }
 
 function btnPeticion(){
-    $(".peticion").on("click", function(){
-       alert("Hola Mundo");
+    $("#timeline_ofertas").on("click", ".usr_peticion", function(){
+       $.post("/php/verifica_sesion.php",
+        function(data){
+            if(data.estado === true){
+                //alert("Se ha iniciado sesion");
+            }
+            else{
+                //alert("negativo");
+                $('#myModal').modal('show');
+            }
+        },
+        'json'
+       );
     });
 }
 
