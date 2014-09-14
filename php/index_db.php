@@ -41,7 +41,8 @@
                                     'oferta_precio' => mysql_result($resOfertas, $i, "oferta_precio"),
                                     'oferta_fecha' => mysql_result($resOfertas, $i, "oferta_fecha"),
                                     'oferta_imagen' => mysql_result($resOfertas, $i, "oferta_imagen"),
-                                    'usr_id' => mysql_result($resOfertas, $i, "usr_id"));
+                                    'usr_id' => mysql_result($resOfertas, $i, "usr_id"),
+                                    'oferta_id' => mysql_result($resOfertas, $i, oferta_id));
         }
     }
     else{

@@ -25,16 +25,15 @@ function cargarOfertas(){
             $.each(data.ofertas, function(i,val){
                 //alert(val.usr_nickname);
                 if(bandera == 1){
-                    $("#timeline_ofertas").append("<li><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.usr_id+"'>Primary</button></div></div></div></li>");
+                    $("#timeline_ofertas").append("<li><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.oferta_id+"'>Primary</button></div></div></div></li>");
                     bandera = 0;
                 }     
                 else{
-                    $("#timeline_ofertas").append("<li class='timeline-inverted'><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.usr_id+"'>Primary</button></div></div></div></li>")
+                    $("#timeline_ofertas").append("<li class='timeline-inverted'><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.oferta_id+"'>Primary</button></div></div></div></li>")
                     bandera = 1;
                 }
             });
             pagina += salto;
-            
         },
         'json'
     );
@@ -47,7 +46,7 @@ function verificarSesion(){
             if(data.estado === true){
                 usr_id = data.usr_id;
                 usr_nickname = data.usr_nickname;
-                $("#botonMenUsuario").text(usr_nickname);
+                $("#botonMenUsuario").append("<span class='glyphicon glyphicon-list-alt'></span> "+usr_nickname);
             }
             else{
                 //alert("No ha iniciado sesion");
@@ -63,6 +62,7 @@ function btnPeticion(){
         function(data){
             if(data.estado === true){
                 //alert("Se ha iniciado sesion");
+                alert($)
             }
             else{
                 //alert("negativo");

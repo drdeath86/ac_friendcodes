@@ -12,3 +12,11 @@ and open the template in the editor.
      margin-top: 80px;
 }
 
+.segus {
+  /* max-width: 1088px; */
+  margin-bottom: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 8%;
+  padding-right: 7%;
+}
