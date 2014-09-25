@@ -1,23 +1,21 @@
 var id_oferta;
 
 $(document).ready(function(){
-    
+    verificarSesion();
     $("#MyUploadForm").hide();
     frm_oferta_submit();
     var options = { 
-			target: '#output',   // target element(s) to be updated with server response 
-			beforeSubmit: beforeSubmit,  // pre-submit callback 
-			success: afterSuccess,  // post-submit callback 
-			resetForm: true,        // reset the form after successful submit 
-		}; 
+        target: '#output',   // target element(s) to be updated with server response 
+	beforeSubmit: beforeSubmit,  // pre-submit callback 
+	success: afterSuccess,  // post-submit callback 
+	resetForm: true,        // reset the form after successful submit 
+    }; 
 		
-	 $('#MyUploadForm').submit(function(e) { 
-			$(this).ajaxSubmit(options);  			
-			// always return false to prevent standard browser submit and page navigation 
-			return false;
-		});  
-    
-    
+    $('#MyUploadForm').submit(function(e) { 
+    	$(this).ajaxSubmit(options);  			
+	// always return false to prevent standard browser submit and page navigation 
+	return false;
+    }); 
 });
 
 function frm_oferta_submit(){
@@ -124,3 +122,33 @@ function bytesToSize(bytes) {
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
+function verificarSesion(){
+    $.post("/php/verifica_sesion.php",
+        function(data){
+            //alert(data.estado);
+            if(data.estado === true){
+                usr_id = data.usr_id;
+                usr_nickname = data.usr_nickname;
+                $("#botonMenUsuario").append("<span class='glyphicon glyphicon-list-alt'></span> "+usr_nickname);
+            }
+            else{
+                //alert("No ha iniciado sesion");
+            }
+        },
+        'json'
+    );
+}
+
+
+function cerrarSesion() {
+    $('#nav_bar').on("click", "#cerrar_sesion", function(e) {
+        $.ajaxSetup({async: false});
+        $.post("/php/cerrarSesion.php");
+        var delay = 1000; //Your delay in milliseconds
+        setTimeout(function() {
+            window.location.href = "../index.php";
+        }, delay);
+        e.preventDefault();
+        $.ajaxSetup({async: true});
+    });
+}

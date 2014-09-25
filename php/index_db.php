@@ -2,20 +2,24 @@
     
     ini_set('display_errors',1); 
     error_reporting(E_ALL ^ E_DEPRECATED);
+    
+    include './conexion_db.php';
+    $con    = conexion();
+    include './funciones_php/index_funciones.php';
+    
     session_start();
     
     if(isset($_SESSION['usr_id']) && isset($_SESSION['usr_nickname'])){
         $usr_id = $_SESSION['usr_id'];
         $where = "WHERE usr_id NOT IN ($usr_id)";
         $estado = TRUE;
+        $arrayOfertas = obtenerSolicitudes();
     }
     else{
         $where = "";
         $estado = FALSE;
+        $arrayOfertas = array();
     }
-    
-    include './conexion_db.php';
-    $con    = conexion();
     
     $json = new stdClass();
     $respuestaJSON = array();
@@ -35,14 +39,25 @@
     $num        = mysql_num_rows($resOfertas);
     
     if($num > 0){
+        
+        //print_r($arrayOfertas);
         for($i = 0; $i < $num; $i++){
+            $oferta_id = mysql_result($resOfertas, $i, "oferta_id");
+            if(in_array($oferta_id, $arrayOfertas)){
+                $oferta_agregada = TRUE;
+            }
+            else{
+                $oferta_agregada = FALSE;
+            }
+            
             $respuestaJSON[] = array('usr_nickname' => mysql_result($resOfertas, $i, "usr_nickname"),
                                     'usr_fc' => mysql_result($resOfertas, $i, "usr_fc"),
                                     'oferta_precio' => mysql_result($resOfertas, $i, "oferta_precio"),
                                     'oferta_fecha' => mysql_result($resOfertas, $i, "oferta_fecha"),
                                     'oferta_imagen' => mysql_result($resOfertas, $i, "oferta_imagen"),
                                     'usr_id' => mysql_result($resOfertas, $i, "usr_id"),
-                                    'oferta_id' => mysql_result($resOfertas, $i, oferta_id));
+                                    'oferta_id' => mysql_result($resOfertas, $i, "oferta_id"),
+                                    'oferta_agregada' => $oferta_agregada);
         }
     }
     else{

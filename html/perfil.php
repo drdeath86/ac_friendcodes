@@ -33,59 +33,18 @@ session_start();
 
         <div id="nav_bar"><?php echo $doc->saveHTML(); ?></div>
         <div class="container">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Perfil</h3>
+                    <h3 class="panel-title" id="nombrePerfil">Perfil de: </h3>
                 </div>
                 <div class="panel-body">
-                    <form id="frm_registro" class="form-horizontal" role="form">
-                        
-                        <div class="form-group">
-                            <label for="usr_nickname" class="col-sm-2 control-label">Nickname: </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="usr_nickname" name="usr_nickname" placeholder="Nickname">
-                            </div>
-                            
-                        </div>
-                        <div id="alert_nickname"></div>
-                        
-                        <div class="form-group">
-                            <label for="usr_fc" class="col-sm-2 control-label">Friend Code: </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="usr_fc" name="usr_fc" placeholder="Friend Code">
-                            </div>
-                        </div>
-                        <div id="alert_fc"></div>
-                        
-                        <div class="form-group">
-                            <label for="usr_email" class="col-sm-2 control-label">Email: </label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="usr_email" name="usr_email" placeholder="Email">
-                            </div>
-                        </div>
-                        <div id="alert_email"></div>
-                        
-                        <div class="form-group">
-                            <label for="usr_password" class="col-sm-2 control-label">Password: </label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="usr_password" name="usr_password" placeholder="Password">
-                            </div>
-                        </div>
-                        <div id="alert_password"></div>
-                        
-                        <div class="form-group">
-                            <label for="usr_password_conf" class="col-sm-2 control-label">Confirmacion Password: </label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="usr_password_conf" name="usr_password2" placeholder="Confirma tu password">
-                            </div>
-                        </div>
-                       
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" id="btn_registro" class="btn btn-success">Registrarse!</button>
-                            </div>
-                        </div>
-                    </form>
+                    <ul class="list-group">
+                        <li class="list-group-item">Nombre: </li>
+                        <li class="list-group-item">Friend Code: </li>
+                        <li class="list-group-item">Nombre de pueblo: </li>
+                        <li class="list-group-item">Ofertas hechas: </li>
+                    </ul>
+                    <button type="button" class="btn btn-default">Agregar a mi lista.</button>
                 </div>
             </div>
         </div>

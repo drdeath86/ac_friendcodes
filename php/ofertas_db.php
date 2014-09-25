@@ -24,7 +24,7 @@ $arrayValoresOferta = array( 0 => $usr_id,
 $json->verificarValoresNulos = verificarValoresNulos($arrayValoresOferta);
 
 if($json->verificarValoresNulos){
-    $queryOferta = "INSERT INTO ac_ofertas (oferta_fecha, oferta_precio, oferta_imagen) VALUES (NOW(), $arrayValoresOferta[1], NULL)";
+    $queryOferta = "INSERT INTO ac_ofertas (oferta_fecha, oferta_precio, oferta_imagen, oferta_num_ofertas, oferta_num_max_ofertas) VALUES (NOW(), $arrayValoresOferta[1], NULL,0,5)";
     
     try{
         $con->autocommit(FALSE);

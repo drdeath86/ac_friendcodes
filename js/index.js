@@ -24,12 +24,20 @@ function cargarOfertas(){
             bandera = 1;
             $.each(data.ofertas, function(i,val){
                 //alert(val.usr_nickname);
-                if(bandera == 1){
-                    $("#timeline_ofertas").append("<li><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.oferta_id+"'>Primary</button></div></div></div></li>");
+                if(val.oferta_agregada === true){
+                    etiquetaDisable = "disabled";
+                }
+                else{
+                    etiquetaDisable = "";
+                }
+               
+                
+                if(bandera === 1){
+                    $("#timeline_ofertas").append("<li><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.oferta_id+"' "+etiquetaDisable+">Enviar mi FC</button></div></div></div></li>");
                     bandera = 0;
                 }     
                 else{
-                    $("#timeline_ofertas").append("<li class='timeline-inverted'><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.oferta_id+"'>Primary</button></div></div></div></li>")
+                    $("#timeline_ofertas").append("<li class='timeline-inverted'><div class='timeline-badge'><i class='glyphicon glyphicon-check'></i></div><div class='timeline-panel'><div class='timeline-heading'><h4 class='timeline-title'>Oferta de "+val.usr_nickname+"</h4><p><small class='text-muted'><i class='glyphicon glyphicon-time'></i>Fecha de la Oferta: "+val.oferta_fecha+"</small></p></div><div class='timeline-body'><p>Friend Code: "+val.usr_fc+"</p><p>Precio Nabos: "+val.oferta_precio+"</p><hr><img src="+val.oferta_imagen+" alt='lel' class='img-thumbnail'><div><button type='button' class='btn btn-primary usr_peticion' id='"+val.oferta_id+"' "+etiquetaDisable+">Enviar mi FC</button></div></div></div></li>");
                     bandera = 1;
                 }
             });
@@ -58,11 +66,23 @@ function verificarSesion(){
 
 function btnPeticion(){
     $("#timeline_ofertas").on("click", ".usr_peticion", function(){
+        oferta_id = $(this).attr("id");
+        //alert(oferta_id);
        $.post("/php/verifica_sesion.php",
         function(data){
             if(data.estado === true){
                 //alert("Se ha iniciado sesion");
-                alert($)
+                cadena = "oferta_id="+oferta_id;
+                //alert(cadena);
+                $.post("/php/agregar_solicitud_db.php",
+                    cadena,
+                    function(data){
+                        alert(data.solicitud_correcta);
+                        $('#'+oferta_id+".usr_peticion").prop("disabled", true);
+                        
+                    },
+                    'json'
+                );
             }
             else{
                 //alert("negativo");
